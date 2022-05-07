@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="login">
+    <div class="login-form-wrapper">
+
+        <div class="login-form">
+            <h1>LOGIN</h1>
+            <form id="contact_form" action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                {{ login_form }}
+                {% if next != None %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                {% else %}
+                    <input type="hidden" name="next" value="">
+                {% endif %}
+                <div class="button-section">
+                    <button type="submit" value="Log In" class="sp-button">Войти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .errorlist {
+        color: red;
+    }
+</style>
+</body>
+</html>
