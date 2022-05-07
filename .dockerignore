@@ -4,3 +4,4 @@
 poetry.lock
 pyproject.toml
 *.pyc
+site_backend/db.sqlite3
