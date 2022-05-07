@@ -8,6 +8,8 @@ WORKDIR ./project
 RUN pip install -r requirements.txt
 
 COPY . .
-RUN echo "hello" > text.txt
+WORKDIR ./site_backend
 
 EXPOSE 8000
+CMD python manage.py runserver 0.0.0.0:8000
+
