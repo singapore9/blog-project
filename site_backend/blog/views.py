@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.template.context_processors import csrf
 from django.urls import reverse
 from django.views import View
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
@@ -69,3 +70,14 @@ class ArticleViewSet(ModelViewSet):
             return ReadOnlyArticleSerializer
         else:
             return WriteOnlyArticleSerializer
+
+    def initialize_request(self, request, *args, **kwargs):
+        self.action = self.action_map.get(request.method.lower())
+        request = super().initialize_request(request, *args, **kwargs)
+        return request
+
+    def get_parsers(self):
+        if self.action in ['list', 'retrieve', 'destroy']:
+            return [JSONParser(), ]
+        elif self.action in ['create', 'update', 'partial_update']:
+            return [MultiPartParser(), FormParser()]
